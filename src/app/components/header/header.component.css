@@ -1,0 +1,11 @@
+.spacer {
+    flex: 1 1 auto;
+  }
+
+.logo__first-part {
+    font-weight: 200;
+}
+
+.logo__second-part {
+    font-weight: 800;
+}

@@ -1,0 +1,18 @@
+<mat-toolbar color="primary">
+    <button mat-icon-button>
+        <mat-icon>menu</mat-icon>
+    </button>
+    <a routerLink="/" class="logo">
+        <span class=logo__first-part>EVER</span>
+        <span class=logo__second-part>KEEP</span>
+    </a>
+    <span class="spacer"></span>
+    <div *ngIf="!isAuthenticated">
+        <a mat-button routerLink="/users/login">Log in</a>
+        <a mat-button routerLink="/users/register">Register</a>
+    </div>
+    <div *ngIf="isAuthenticated">
+        <button mat-button (click)=logout() ngDropdownItem>Logout</button>
+        <a mat-mini-fab>{{userEmail[0] | uppercase}}</a>
+    </div>
+</mat-toolbar>

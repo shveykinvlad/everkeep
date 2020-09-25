@@ -1,0 +1,37 @@
+<div class="container">
+  <div *ngIf="notes">
+    <mat-card>
+      <div class="form">
+        <mat-form-field class="form__element" appearance="outline">
+          <mat-label>Search</mat-label>
+          <input matInput type="text" #searchBox class="form__element">
+        </mat-form-field>
+        <table mat-table [dataSource]="notes" class="notes">
+          <!-- Priority Column -->
+          <ng-container matColumnDef="priority">
+            <th mat-header-cell *matHeaderCellDef>Priority</th>
+            <td mat-cell *matCellDef="let note" class="note__priority_{{note.priority|lowercase}}">
+              <i class="material-icons">stop_circle</i>
+            </td>
+          </ng-container>
+          <!-- Title Column -->
+          <ng-container matColumnDef="title">
+            <th mat-header-cell *matHeaderCellDef>Title</th>
+            <td mat-cell *matCellDef="let note">{{note.title}}</td>
+          </ng-container>
+          <!-- Delete Column -->
+          <ng-container matColumnDef="delete">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let note" (click)="$event.stopPropagation()">
+              <button mat-icon-button (click)=delete(note) ngDropdownItem>
+                <mat-icon>clear</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let note; columns: displayedColumns;" (click)="edit(note)"></tr>
+        </table>
+      </div>
+    </mat-card>
+  </div>
+</div>
