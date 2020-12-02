@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  apiUrl: 'https://everkeep-api.herokuapp.com/api/'
 };
