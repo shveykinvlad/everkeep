@@ -24,3 +24,23 @@ a {
     width: 100%;
     margin-bottom: 10px;
 }
+
+.form__title {
+    width: 100%;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.form__subtitle {
+    width: 100%;
+    text-align: center;
+}
+
+.link-button {
+    background:none;
+    border:none;
+    margin:0;
+    padding:0;
+    cursor: pointer;
+    text-decoration: underline;
+}

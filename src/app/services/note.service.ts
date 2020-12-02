@@ -31,6 +31,10 @@ export class NoteService {
     return this.http.get<Note>(url);
   }
 
+  saveNote(note: Note): Observable<Note> {
+    return this.http.post<Note>(ApiUrl.notes, note);
+  }
+
   updateNote(note: Note): Observable<Note> {
     const url = `${ApiUrl.notes}/${note.id}`;
 

@@ -15,6 +15,7 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { NoteDetailsComponent } from './components/note-details/note-details.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
+import { ConfirmationComponent } from './components/confirmation/confirmation.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { MaterialModule } from './material/material.module';
     UpdatePasswordComponent,
     HeaderComponent,
     NotesComponent,
-    NoteDetailsComponent
+    NoteDetailsComponent,
+    ConfirmationComponent
   ],
   imports: [
     BrowserModule,

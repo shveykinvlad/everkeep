@@ -11,9 +11,12 @@ import { RegistrationRequest } from '../../models/registration-request';
 })
 export class RegistrationComponent implements OnInit {
 
+  isCompleted: boolean;
   form: FormGroup;
 
-  constructor(private userService: UserService, private router: Router) { }
+  constructor(private userService: UserService, private router: Router) {
+    this.isCompleted = false;
+  }
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -30,6 +33,14 @@ export class RegistrationComponent implements OnInit {
       matchingPassword: this.form.get('matchingPassword').value
     };
     this.userService.register(requestPayload)
+      .subscribe(() => {
+        this.isCompleted = true;
+      });
+  }
+
+  resendToken(): void {
+    const email: string = this.form.get('email').value;
+    this.userService.resendToken(email)
       .subscribe();
   }
 }

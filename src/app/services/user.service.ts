@@ -21,6 +21,20 @@ export class UserService {
     return this.http.post<void>(ApiUrl.register, requestPayload);
   }
 
+  confirm(token: string): Observable<void> {
+    return this.http.get<void>(ApiUrl.confirm, {
+      params: new HttpParams()
+        .set('token', token)
+    });
+  }
+
+  resendToken(email: string): Observable<void> {
+    return this.http.get<void>(ApiUrl.resendToken, {
+      params: new HttpParams()
+        .set('email', email)
+    });
+  }
+
   authenticate(requestPayload: AuthRequest): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(ApiUrl.login, requestPayload).pipe(
       tap(authResponse => {
@@ -71,14 +85,14 @@ export class UserService {
   resetPassword(email: string): Observable<void> {
     return this.http.get<void>(ApiUrl.resetPassword, {
       params: new HttpParams()
-        .set(`email`, email)
+        .set('email', email)
     });
   }
 
   updatePassword(requestPayload: RegistrationRequest, token: string): Observable<void> {
     return this.http.put<void>(ApiUrl.updatePassword, requestPayload, {
       params: new HttpParams()
-        .set(`token`, token)
+        .set('token', token)
     });
   }
 }

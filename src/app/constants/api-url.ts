@@ -3,6 +3,8 @@ import { environment } from 'src/environments/environment';
 export class ApiUrl {
 
     public static readonly register: string = environment.apiUrl + 'users/register';
+    public static readonly confirm: string = environment.apiUrl + 'users/confirm';
+    public static readonly resendToken: string = environment.apiUrl + 'users/confirm/resend';
     public static readonly login: string = environment.apiUrl + 'users/authenticate';
     public static readonly resetPassword: string = environment.apiUrl + 'users/password/reset';
     public static readonly updatePassword: string = environment.apiUrl + 'users/password/update';

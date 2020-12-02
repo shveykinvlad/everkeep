@@ -7,15 +7,18 @@ import { UpdatePasswordComponent } from './components/update-password/update-pas
 import { AuthGuard as AuthGuard } from 'src/app/guards/auth.guard';
 import { NotesComponent } from './components/notes/notes.component';
 import { NoteDetailsComponent } from './components/note-details/note-details.component';
+import { ConfirmationComponent } from './components/confirmation/confirmation.component';
 
 const routes: Routes = [
   { path: 'users/login', component: LoginComponent },
   { path: 'users/register', component: RegistrationComponent },
+  { path: 'users/confirm', component: ConfirmationComponent },
   { path: 'users/password/reset', component: ResetPasswordComponent },
   { path: 'users/password/update', component: UpdatePasswordComponent },
   { path: '', component: NotesComponent, canActivate: [AuthGuard] },
   { path: 'notes', component: NotesComponent, canActivate: [AuthGuard] },
   { path: 'notes/:id', component: NoteDetailsComponent, canActivate: [AuthGuard] },
+  { path: 'notes/add', component: NoteDetailsComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({

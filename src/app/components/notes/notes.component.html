@@ -1,11 +1,11 @@
 <div class="container">
-  <div *ngIf="notes">
-    <mat-card>
-      <div class="form">
-        <mat-form-field class="form__element" appearance="outline">
-          <mat-label>Search</mat-label>
-          <input matInput type="text" #searchBox class="form__element">
-        </mat-form-field>
+  <mat-card>
+    <div class="form">
+      <mat-form-field class="form__element" appearance="outline">
+        <mat-label>Search</mat-label>
+        <input matInput type="text" #searchBox class="form__element">
+      </mat-form-field>
+      <a mat-raised-button color="primary" class="form__element" routerLink="/notes/add">Add</a>
         <table mat-table [dataSource]="notes" class="notes">
           <!-- Priority Column -->
           <ng-container matColumnDef="priority">
@@ -31,7 +31,6 @@
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let note; columns: displayedColumns;" (click)="edit(note)"></tr>
         </table>
-      </div>
-    </mat-card>
-  </div>
+    </div>
+  </mat-card>
 </div>

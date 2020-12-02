@@ -1,19 +1,35 @@
 <div class="container">
     <mat-card>
-        <form class="form" [formGroup]="form" (ngSubmit)="register()">
-            <mat-form-field class="form__element">
-                <mat-label>Email</mat-label>
-                <input matInput type="text" formControlName="email" required>
-            </mat-form-field>
-            <mat-form-field class="form__element">
-                <mat-label>Password</mat-label>
-                <input matInput type="password" formControlName="password" required>
-            </mat-form-field>
-            <mat-form-field class="form__element">
-                <mat-label>Confirm password</mat-label>
-                <input matInput type="password" formControlName="matchingPassword" required>
-            </mat-form-field>
-            <button mat-raised-button color="primary" class="form__element" type="submit">Register</button>
-        </form>
+        <div *ngIf="!isCompleted">
+            <form class="form" [formGroup]="form" (ngSubmit)="register()">
+                <mat-form-field class="form__element">
+                    <mat-label>Email</mat-label>
+                    <input matInput type="text" formControlName="email" required>
+                </mat-form-field>
+                <mat-form-field class="form__element">
+                    <mat-label>Password</mat-label>
+                    <input matInput type="password" formControlName="password" required>
+                </mat-form-field>
+                <mat-form-field class="form__element">
+                    <mat-label>Confirm password</mat-label>
+                    <input matInput type="password" formControlName="matchingPassword" required>
+                </mat-form-field>
+                <button mat-raised-button color="primary" class="form__element" type="submit">Register</button>
+            </form>
+        </div>
+        <div *ngIf="isCompleted">
+            <div class="form">
+                <div class="form__title">
+                    <mat-card-title>Registration completed</mat-card-title>
+                </div>
+                <div class="form__subtitle">
+                    <mat-card-subtitle class="form__subtitle">
+                        Please check and confirm your registered email. If you have not received the email, please check spam folder.
+                        <button (click)=resendToken() class="link-button">Resend email?</button>
+                    </mat-card-subtitle>
+                </div>
+                <a mat-raised-button color="primary" class="form__element" routerLink="/users/login">Log in</a>
+            </div>
+        </div>
     </mat-card>
 </div>

@@ -5,5 +5,4 @@ export interface Note {
     title: string;
     text: string;
     priority: Priority;
-    endDate: Date;
 }

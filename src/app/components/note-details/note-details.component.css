@@ -2,21 +2,3 @@
     width: 350px;
     margin: 80px auto 20px auto;
 }
-
-.note__priority {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
-
-.note__priority_high {
-  color: crimson;
-}
-  
-.note__priority_medium {
-    color: gold;
-}
-  
-.note__priority_low {
-  color: lightgreen;
-}

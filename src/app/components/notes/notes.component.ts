@@ -1,11 +1,9 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, ViewChildren, ChangeDetectorRef } from '@angular/core';
 import { Note } from 'src/app/models/note';
 import { NoteService } from 'src/app/services/note.service';
-import { Subject, Observable, BehaviorSubject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { fromEvent } from 'rxjs';
 import { Router } from '@angular/router';
-import { ApiUrl } from 'src/app/constants/api-url';
 
 @Component({
   selector: 'app-notes',

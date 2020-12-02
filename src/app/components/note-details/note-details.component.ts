@@ -1,10 +1,10 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { Note } from 'src/app/models/note';
 import { NoteService } from 'src/app/services/note.service';
-import { FormControl, FormGroup } from '@angular/forms';
 import { Priority } from 'src/app/enums/priority.enum';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-note-details',
@@ -14,35 +14,66 @@ import { Priority } from 'src/app/enums/priority.enum';
 export class NoteDetailsComponent implements OnInit {
 
   priorities = [];
-  note: Note;
+  id: number;
+  form: FormGroup;
 
-  constructor(private route: ActivatedRoute, private router: Router, private noteService: NoteService, private location: Location) { }
-
-  ngOnInit(): void {
+  constructor(private route: ActivatedRoute, private router: Router, private noteService: NoteService, private location: Location) {
+    this.id = this.getPathId();
     this.priorities = Object.keys(Priority)
       .filter(key => isNaN(+key));
-    this.getNote();
   }
 
-  getNote(): void {
-    const id = +this.route.snapshot.paramMap.get('id');
-    this.noteService.getNote(id)
-      .subscribe(note => this.note = note);
+  ngOnInit(): void {
+    this.initForm();
+
+    if (!Number.isNaN(this.id)) {
+      this.noteService.getNote(this.id)
+        .subscribe(note => this.form.patchValue(note));
+    }
   }
 
   goBack(): void {
     this.location.back();
   }
 
-  save(): void {
-    this.noteService.updateNote(this.note)
-      .subscribe(note => {
-        this.note = note;
+  submit(): void {
+    const note: Note = {
+      id: this.id,
+      title: this.form.get('title').value,
+      text: this.form.get('text').value,
+      priority: this.form.get('priority').value
+    };
+
+    if (Number.isNaN(this.id)) {
+      this.save(note);
+    } else {
+      this.update(note);
+    }
+  }
+
+  private save(note: Note): void {
+    this.noteService.saveNote(note)
+      .subscribe(() => {
         this.router.navigateByUrl('notes');
       });
   }
 
-  setPriority(priority: Priority): void {
-    this.note.priority = priority;
+  private update(note: Note): void {
+    this.noteService.updateNote(note)
+      .subscribe(() => {
+        this.router.navigateByUrl('notes');
+      });
+  }
+
+  private initForm(): void {
+    this.form = new FormGroup({
+      title: new FormControl(),
+      text: new FormControl(),
+      priority: new FormControl()
+    });
+  }
+
+  private getPathId(): number {
+    return +this.route.snapshot.paramMap.get('id');
   }
 }
