@@ -37,12 +37,7 @@ export class NoteDetailsComponent implements OnInit {
   }
 
   submit(): void {
-    const note: Note = {
-      id: this.id,
-      title: this.form.get('title').value,
-      text: this.form.get('text').value,
-      priority: this.form.get('priority').value
-    };
+    const note: Note = this.createNote();
 
     if (Number.isNaN(this.id)) {
       this.save(note);
@@ -71,6 +66,17 @@ export class NoteDetailsComponent implements OnInit {
       text: new FormControl(),
       priority: new FormControl()
     });
+  }
+
+  private createNote(): Note {
+    const id = this.id;
+    const title = this.form.get('title').value;
+    const text = this.form.get('text').value;
+    const priority = this.form.get('priority').value == null ? Priority.NONE : this.form.get('priority').value;
+
+    const note: Note = { id, title, text, priority };
+
+    return note;
   }
 
   private getPathId(): number {

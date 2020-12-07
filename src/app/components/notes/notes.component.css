@@ -24,6 +24,10 @@
   color: lightgreen;
 }
 
+.note__priority_none {
+  color:gray;
+}
+
 .mat-row:hover {
   background-color: gainsboro;
   cursor: pointer;
