@@ -1,7 +1,9 @@
 
 
 # Everkeep UI
-Frontend for notes service
+Notes service  
+Frontend: https://everkeep.herokuapp.com  
+Backend: https://everkeep-api.herokuapp.com  
 ## Technologies
 * TypeScript
 * Angular
