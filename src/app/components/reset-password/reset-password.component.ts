@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
-import { FormGroup, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-reset-password',
@@ -10,15 +10,15 @@ import { FormGroup, FormControl } from '@angular/forms';
 export class ResetPasswordComponent implements OnInit {
 
   isCompleted: boolean;
-  form: FormGroup;
+  form: UntypedFormGroup;
 
   constructor(private userService: UserService) {
     this.isCompleted = false;
   }
 
   ngOnInit(): void {
-    this.form = new FormGroup({
-      email: new FormControl()
+    this.form = new UntypedFormGroup({
+      email: new UntypedFormControl()
     });
   }
 

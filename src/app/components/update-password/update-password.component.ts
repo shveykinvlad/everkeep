@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 import { ActivatedRoute } from '@angular/router';
-import { FormGroup, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 import { RegistrationRequest } from 'src/app/models/registration-request';
 
 @Component({
@@ -12,7 +12,7 @@ import { RegistrationRequest } from 'src/app/models/registration-request';
 export class UpdatePasswordComponent implements OnInit {
 
   isCompleted: boolean;
-  form: FormGroup;
+  form: UntypedFormGroup;
   email: string;
   token: string;
 
@@ -21,9 +21,9 @@ export class UpdatePasswordComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.form = new FormGroup({
-      password: new FormControl(),
-      matchingPassword: new FormControl(),
+    this.form = new UntypedFormGroup({
+      password: new UntypedFormControl(),
+      matchingPassword: new UntypedFormControl(),
     });
   }
 

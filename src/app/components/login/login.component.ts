@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
 import { AuthRequest } from '../../models/auth-request';
@@ -12,15 +12,15 @@ import { AuthRequest } from '../../models/auth-request';
 })
 export class LoginComponent implements OnInit {
 
-  form: FormGroup;
+  form: UntypedFormGroup;
 
   constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit(): void {
-    this.form = new FormGroup({
-      email: new FormControl(),
-      password: new FormControl(),
-      matchingPassword: new FormControl(),
+    this.form = new UntypedFormGroup({
+      email: new UntypedFormControl(),
+      password: new UntypedFormControl(),
+      matchingPassword: new UntypedFormControl(),
     });
   }
 

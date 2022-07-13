@@ -4,7 +4,7 @@ import { Location } from '@angular/common';
 import { Note } from 'src/app/models/note';
 import { NoteService } from 'src/app/services/note.service';
 import { Priority } from 'src/app/enums/priority.enum';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-note-details',
@@ -15,7 +15,7 @@ export class NoteDetailsComponent implements OnInit {
 
   priorities = [];
   id: number;
-  form: FormGroup;
+  form: UntypedFormGroup;
 
   constructor(private route: ActivatedRoute, private router: Router, private noteService: NoteService, private location: Location) {
     this.id = this.getPathId();
@@ -61,10 +61,10 @@ export class NoteDetailsComponent implements OnInit {
   }
 
   private initForm(): void {
-    this.form = new FormGroup({
-      title: new FormControl(),
-      text: new FormControl(),
-      priority: new FormControl()
+    this.form = new UntypedFormGroup({
+      title: new UntypedFormControl(),
+      text: new UntypedFormControl(),
+      priority: new UntypedFormControl()
     });
   }
 

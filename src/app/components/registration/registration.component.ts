@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormGroup, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { RegistrationRequest } from '../../models/registration-request';
 
@@ -12,17 +12,17 @@ import { RegistrationRequest } from '../../models/registration-request';
 export class RegistrationComponent implements OnInit {
 
   isCompleted: boolean;
-  form: FormGroup;
+  form: UntypedFormGroup;
 
   constructor(private userService: UserService, private router: Router) {
     this.isCompleted = false;
   }
 
   ngOnInit(): void {
-    this.form = new FormGroup({
-      email: new FormControl(),
-      password: new FormControl(),
-      matchingPassword: new FormControl(),
+    this.form = new UntypedFormGroup({
+      email: new UntypedFormControl(),
+      password: new UntypedFormControl(),
+      matchingPassword: new UntypedFormControl(),
     });
   }
 
