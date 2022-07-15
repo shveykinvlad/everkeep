@@ -15,13 +15,13 @@ export class NoteService {
     return this.http.get<Note[]>(ApiUrl.notes);
   }
 
-  getByTitle(term: string): Observable<Note[]> {
-    if (!term) {
+  search(value: string): Observable<Note[]> {
+    if (!value) {
       return this.getNotes();
     }
     return this.http.get<Note[]>(ApiUrl.notesSearch, {
       params: new HttpParams()
-        .set(`title`, term)
+        .set(`value`, value)
     });
   }
 

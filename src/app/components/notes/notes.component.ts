@@ -33,7 +33,7 @@ export class NotesComponent implements OnInit, AfterViewInit {
         debounceTime(300),
         distinctUntilChanged(),
         switchMap((search: any) => {
-          return this.noteService.getByTitle(search.target.value);
+          return this.noteService.search(search.target.value);
         })
       )
       .subscribe(notes => this.notes = notes);
