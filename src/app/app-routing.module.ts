@@ -11,8 +11,8 @@ import { ConfirmationComponent } from './components/confirmation/confirmation.co
 
 const routes: Routes = [
   { path: 'users/login', component: LoginComponent },
-  { path: 'users/register', component: RegistrationComponent },
-  { path: 'users/confirm', component: ConfirmationComponent },
+  { path: 'users/registration', component: RegistrationComponent },
+  { path: 'users/confirmation', component: ConfirmationComponent },
   { path: 'users/password/reset', component: ResetPasswordComponent },
   { path: 'users/password/update', component: UpdatePasswordComponent },
   { path: '', component: NotesComponent, canActivate: [AuthGuard] },

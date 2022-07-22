@@ -22,14 +22,14 @@ export class UserService {
   }
 
   confirm(token: string): Observable<void> {
-    return this.http.get<void>(ApiUrl.confirm, {
+    return this.http.get<void>(ApiUrl.confirmation, {
       params: new HttpParams()
         .set('token', token)
     });
   }
 
   resendToken(email: string): Observable<void> {
-    return this.http.get<void>(ApiUrl.resendToken, {
+    return this.http.get<void>(ApiUrl.confirmation, {
       params: new HttpParams()
         .set('email', email)
     });

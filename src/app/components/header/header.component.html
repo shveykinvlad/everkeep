@@ -9,7 +9,7 @@
     <span class="spacer"></span>
     <div *ngIf="!isAuthenticated">
         <a mat-button routerLink="/users/login">Log in</a>
-        <a mat-button routerLink="/users/register">Register</a>
+        <a mat-button routerLink="/users/registration">Register</a>
     </div>
     <div *ngIf="isAuthenticated">
         <button mat-button (click)=logout() ngDropdownItem>Logout</button>
