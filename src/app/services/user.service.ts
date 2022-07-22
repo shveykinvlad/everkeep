@@ -18,7 +18,7 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   register(requestPayload: RegistrationRequest): Observable<void> {
-    return this.http.post<void>(ApiUrl.register, requestPayload);
+    return this.http.post<void>(ApiUrl.users, requestPayload);
   }
 
   confirm(token: string): Observable<void> {
