@@ -39,10 +39,10 @@ export class UserService {
     return this.http.post<AuthResponse>(ApiUrl.login, requestPayload).pipe(
       tap(authResponse => {
         localStorage.setItem('accessToken', authResponse.jwt);
-        localStorage.setItem('refreshToken', authResponse.refreshTokenValue);
-        localStorage.setItem('userEmail', authResponse.userEmail);
+        localStorage.setItem('refreshToken', authResponse.refreshToken);
+        localStorage.setItem('userEmail', authResponse.email);
         this.authenticated.emit(true);
-        this.userEmail.emit(authResponse.userEmail);
+        this.userEmail.emit(authResponse.email);
       })
     );
   }
@@ -51,10 +51,10 @@ export class UserService {
     return this.http.post<AuthResponse>(ApiUrl.refreshAccessToken, this.getRefreshToken()).pipe(
       tap(authResponse => {
         localStorage.setItem('accessToken', authResponse.jwt);
-        localStorage.setItem('refreshToken', authResponse.refreshTokenValue);
-        localStorage.setItem('userEmail', authResponse.userEmail);
+        localStorage.setItem('refreshToken', authResponse.refreshToken);
+        localStorage.setItem('userEmail', authResponse.email);
         this.authenticated.emit(true);
-        this.userEmail.emit(authResponse.userEmail);
+        this.userEmail.emit(authResponse.email);
       })
     );
   }

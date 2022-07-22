@@ -1,5 +1,5 @@
 export interface AuthResponse {
     jwt: string;
-    refreshTokenValue: string;
-    userEmail: string;
+    refreshToken: string;
+    email: string;
 }
