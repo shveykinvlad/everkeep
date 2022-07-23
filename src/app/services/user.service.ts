@@ -1,11 +1,12 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { RegistrationRequest } from '../models/registration-request';
 import { Observable } from 'rxjs';
 import { ApiUrl } from '../constants/api-url';
 import { AuthRequest } from '../models/auth-request';
 import { AuthResponse } from '../models/auth-response';
 import { tap } from 'rxjs/operators';
+import { Header } from '../constants/header';
 
 @Injectable({
   providedIn: 'root'
@@ -21,22 +22,36 @@ export class UserService {
     return this.http.post<void>(ApiUrl.users, requestPayload);
   }
 
-  confirm(token: string): Observable<void> {
-    return this.http.get<void>(ApiUrl.confirmation, {
-      params: new HttpParams()
-        .set('token', token)
-    });
-  }
-
-  resendToken(email: string): Observable<void> {
+  resendConfirmation(email: string): Observable<void> {
     return this.http.get<void>(ApiUrl.confirmation, {
       params: new HttpParams()
         .set('email', email)
     });
   }
 
+  applyConfirmation(token: string): Observable<void> {
+    return this.http.post<void>(ApiUrl.confirmation, null, {
+      headers: new HttpHeaders()
+        .set(Header.xApiKey, token),
+    });
+  }
+
+  resetPassword(email: string): Observable<void> {
+    return this.http.delete<void>(ApiUrl.password, {
+      params: new HttpParams()
+        .set('email', email)
+    });
+  }
+
+  updatePassword(requestPayload: RegistrationRequest, token: string): Observable<void> {
+    return this.http.post<void>(ApiUrl.password, requestPayload, {
+      headers: new HttpHeaders()
+        .set(Header.xApiKey, token),
+    });
+  }
+
   authenticate(requestPayload: AuthRequest): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(ApiUrl.login, requestPayload).pipe(
+    return this.http.post<AuthResponse>(ApiUrl.authentication, requestPayload).pipe(
       tap(authResponse => {
         localStorage.setItem('accessToken', authResponse.jwt);
         localStorage.setItem('refreshToken', authResponse.refreshToken);
@@ -47,8 +62,11 @@ export class UserService {
     );
   }
 
-  refreshToken(): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(ApiUrl.refreshAccessToken, this.getRefreshToken()).pipe(
+  refreshAccess(): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(ApiUrl.refreshAccessToken, null, {
+      headers: new HttpHeaders()
+        .set(Header.xApiKey, this.getRefreshToken()),
+    }).pipe(
       tap(authResponse => {
         localStorage.setItem('accessToken', authResponse.jwt);
         localStorage.setItem('refreshToken', authResponse.refreshToken);
@@ -80,19 +98,5 @@ export class UserService {
 
     this.authenticated.emit(false);
     this.userEmail.emit(null);
-  }
-
-  resetPassword(email: string): Observable<void> {
-    return this.http.get<void>(ApiUrl.resetPassword, {
-      params: new HttpParams()
-        .set('email', email)
-    });
-  }
-
-  updatePassword(requestPayload: RegistrationRequest, token: string): Observable<void> {
-    return this.http.put<void>(ApiUrl.updatePassword, requestPayload, {
-      params: new HttpParams()
-        .set('token', token)
-    });
   }
 }

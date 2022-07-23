@@ -19,7 +19,7 @@ export class NoteService {
     if (!value) {
       return this.getNotes();
     }
-    return this.http.get<Note[]>(ApiUrl.notesSearch, {
+    return this.http.get<Note[]>(ApiUrl.search, {
       params: new HttpParams()
         .set(`value`, value)
     });

@@ -13,7 +13,7 @@ export class ConfirmationComponent implements OnInit {
 
   ngOnInit(): void {
     const token: string = this.route.snapshot.queryParamMap.get('token');
-    this.userService.confirm(token)
+    this.userService.applyConfirmation(token)
       .subscribe();
   }
 }

@@ -38,9 +38,9 @@ export class RegistrationComponent implements OnInit {
       });
   }
 
-  resendToken(): void {
+  resendConfirmation(): void {
     const email: string = this.form.get('email').value;
-    this.userService.resendToken(email)
+    this.userService.resendConfirmation(email)
       .subscribe();
   }
 }
