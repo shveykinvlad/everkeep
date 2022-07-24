@@ -9,6 +9,7 @@ export class ApiUrl {
     public static readonly password: string = this.users + '/password'
     public static readonly authentication: string = this.users + '/authentication';
     public static readonly refreshAccessToken: string = this.users + '/access';
+    public static readonly logout: string = this.users + '/logout';
 
     public static readonly notes: string = environment.apiUrl + '/notes';
     public static readonly search: string = this.notes + '/search';

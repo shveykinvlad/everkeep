@@ -94,6 +94,11 @@ export class UserService {
   }
 
   logout(): void {
+    this.http.delete<void>(ApiUrl.logout, {
+      headers: new HttpHeaders()
+        .set(Header.xApiKey, this.getRefreshToken()),
+    }).subscribe();
+
     localStorage.clear();
 
     this.authenticated.emit(false);
