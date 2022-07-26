@@ -39,7 +39,7 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
   private handle500VerificationTokenExpiredError(): void {
-    this.userService.logout();
+    this.userService.deleteSession();
     this.router.navigateByUrl('/users/login');
   }
 
@@ -53,7 +53,7 @@ export class AuthInterceptor implements HttpInterceptor {
     if (!this.isRefreshing) {
       this.isRefreshing = true;
       this.refreshTokenSubject.next(null);
-      return this.userService.refreshAccess().pipe(
+      return this.userService.refreshSession().pipe(
         switchMap((token: any) => {
           this.isRefreshing = false;
           this.refreshTokenSubject.next(token.jwt);

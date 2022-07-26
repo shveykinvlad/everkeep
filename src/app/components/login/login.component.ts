@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
-import { AuthRequest } from '../../models/auth-request';
+import { SessionRequest } from '../../models/session-request';
 
 
 @Component({
@@ -25,12 +25,12 @@ export class LoginComponent implements OnInit {
   }
 
   login(): void {
-    const requestPayload: AuthRequest = {
+    const requestPayload: SessionRequest = {
       email: this.form.get('email').value,
       password: this.form.get('password').value,
     };
 
-    this.userService.authenticate(requestPayload)
+    this.userService.createSession(requestPayload)
       .subscribe(() => this.router.navigateByUrl(''));
   }
 }

@@ -3,8 +3,8 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { RegistrationRequest } from '../models/registration-request';
 import { Observable } from 'rxjs';
 import { ApiUrl } from '../constants/api-url';
-import { AuthRequest } from '../models/auth-request';
-import { AuthResponse } from '../models/auth-response';
+import { SessionRequest } from '../models/session-request';
+import { SessionResponse } from '../models/session-response';
 import { tap } from 'rxjs/operators';
 import { Header } from '../constants/header';
 
@@ -50,29 +50,29 @@ export class UserService {
     });
   }
 
-  authenticate(requestPayload: AuthRequest): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(ApiUrl.authentication, requestPayload).pipe(
-      tap(authResponse => {
-        localStorage.setItem('accessToken', authResponse.jwt);
-        localStorage.setItem('refreshToken', authResponse.refreshToken);
-        localStorage.setItem('userEmail', authResponse.email);
+  createSession(requestPayload: SessionRequest): Observable<SessionResponse> {
+    return this.http.post<SessionResponse>(ApiUrl.session, requestPayload).pipe(
+      tap(sessionResponse => {
+        localStorage.setItem('accessToken', sessionResponse.jwt);
+        localStorage.setItem('refreshToken', sessionResponse.refreshToken);
+        localStorage.setItem('userEmail', sessionResponse.email);
         this.authenticated.emit(true);
-        this.userEmail.emit(authResponse.email);
+        this.userEmail.emit(sessionResponse.email);
       })
     );
   }
 
-  refreshAccess(): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(ApiUrl.refreshAccessToken, null, {
+  refreshSession(): Observable<SessionResponse> {
+    return this.http.put<SessionResponse>(ApiUrl.session, null, {
       headers: new HttpHeaders()
         .set(Header.xApiKey, this.getRefreshToken()),
     }).pipe(
-      tap(authResponse => {
-        localStorage.setItem('accessToken', authResponse.jwt);
-        localStorage.setItem('refreshToken', authResponse.refreshToken);
-        localStorage.setItem('userEmail', authResponse.email);
+      tap(sessionResponse => {
+        localStorage.setItem('accessToken', sessionResponse.jwt);
+        localStorage.setItem('refreshToken', sessionResponse.refreshToken);
+        localStorage.setItem('userEmail', sessionResponse.email);
         this.authenticated.emit(true);
-        this.userEmail.emit(authResponse.email);
+        this.userEmail.emit(sessionResponse.email);
       })
     );
   }
@@ -93,8 +93,8 @@ export class UserService {
     return localStorage.getItem('userEmail');
   }
 
-  logout(): void {
-    this.http.delete<void>(ApiUrl.logout, {
+  deleteSession(): void {
+    this.http.delete<void>(ApiUrl.session, {
       headers: new HttpHeaders()
         .set(Header.xApiKey, this.getRefreshToken()),
     }).subscribe();

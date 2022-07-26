@@ -1,4 +1,4 @@
-export interface AuthResponse {
+export interface SessionResponse {
     jwt: string;
     refreshToken: string;
     email: string;
