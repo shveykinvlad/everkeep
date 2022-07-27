@@ -1,4 +1,4 @@
 export class Header {
 
-    public static readonly xApiKey: string = 'X-API-KEY';
+    public static readonly X_API_KEY: string = 'X-API-KEY';
 }
