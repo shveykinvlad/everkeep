@@ -14,7 +14,6 @@ export class AuthGuard implements CanActivate {
     const isAuthenticated = this.userService.isAuthenticated();
 
     if (isAuthenticated) {
-      // TODO: Add check for token expiration;
       return true;
     } else {
       this.router.navigateByUrl('/users/login');
