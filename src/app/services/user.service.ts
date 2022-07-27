@@ -99,6 +99,10 @@ export class UserService {
         .set(Header.xApiKey, this.getRefreshToken()),
     }).subscribe();
 
+    this.clearData();
+  }
+
+  clearData(): void {
     localStorage.clear();
 
     this.authenticated.emit(false);
