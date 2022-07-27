@@ -11,7 +11,7 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
 import { UpdatePasswordComponent } from './components/update-password/update-password.component';
 import { HeaderComponent } from './components/header/header.component';
 import { NotesComponent } from './components/notes/notes.component';
-import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { GlobalInterceptor } from './interceptors/global.interceptor';
 import { NoteDetailsComponent } from './components/note-details/note-details.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
@@ -41,7 +41,7 @@ import { ConfirmationComponent } from './components/confirmation/confirmation.co
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
+      useClass: GlobalInterceptor,
       multi: true
     }
   ],

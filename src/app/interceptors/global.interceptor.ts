@@ -1,16 +1,13 @@
+import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpStatusCode } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
-import { Observable, throwError, BehaviorSubject, of } from 'rxjs';
-import { catchError, filter, take, switchMap } from 'rxjs/operators';
-import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
+import { Observable, throwError } from 'rxjs';
+import { catchError, switchMap } from 'rxjs/operators';
 import { SessionResponse } from '../models/session-response';
+import { UserService } from '../services/user.service';
 
 @Injectable()
-export class AuthInterceptor implements HttpInterceptor {
-
-  private isRefreshing = false;
-  private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+export class GlobalInterceptor implements HttpInterceptor {
 
   constructor(private userService: UserService, private router: Router) { }
 
@@ -64,31 +61,12 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
   private handleUnauthorizedError(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (!this.isRefreshing) {
-      this.isRefreshing = true;
-      this.refreshTokenSubject.next(null);
-
-      return this.getToken(request, next);
-    } else {
-      return this.addToken(request, next);
-    }
-  }
-
-  private addToken(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    return this.refreshTokenSubject.pipe(
-      filter(token => token != null),
-      take(1),
-      switchMap(jwt => {
-        return next.handle(this.getAuthorizedRequest(request, jwt));
-      })
-    );
+    return this.getToken(request, next);
   }
 
   private getToken(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return this.userService.refreshSession().pipe(
       switchMap((sessionResponse: SessionResponse) => {
-        this.isRefreshing = false;
-        this.refreshTokenSubject.next(sessionResponse.jwt);
         return next.handle(this.getAuthorizedRequest(request, sessionResponse.jwt));
       }),
       catchError(error => this.handleRefreshSessionError(request, error, next))
