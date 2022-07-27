@@ -1,5 +1,5 @@
 .container {
-  width:  350px;
+  width: 350px;
   margin: 80px auto 20px auto;
 }
 
@@ -16,7 +16,7 @@
   color: crimson;
 }
 
-.note__priority_medium  {
+.note__priority_medium {
   color: gold;
 }
 
@@ -25,7 +25,7 @@
 }
 
 .note__priority_none {
-  color:gray;
+  color: gray;
 }
 
 .mat-row:hover {
