@@ -1,15 +1,29 @@
 <div class="container">
     <mat-card>
-        <div class="form">
-            <div class="form__title">
-                <mat-card-title>Email confirmed</mat-card-title>
+        <div *ngIf="isCompleted">
+            <div class="form">
+                <div class="form__title">
+                    <mat-card-title>Email confirmed</mat-card-title>
+                </div>
+                <div class="form__subtitle">
+                    <mat-card-subtitle class="form__subtitle">
+                        Log in and use the functionality of the service.
+                    </mat-card-subtitle>
+                </div>
+                <a mat-raised-button color="primary" class="form__element" routerLink="/users/login">Log in</a>
             </div>
-            <div class="form__subtitle">
-                <mat-card-subtitle class="form__subtitle">
-                    Log in and use the functionality of the service.
-                </mat-card-subtitle>
+        </div>
+        <div *ngIf="!isCompleted">
+            <div class="form">
+                <div class="form__title">
+                    <mat-card-title>Something went wrong</mat-card-title>
+                </div>
+                <div class="form__subtitle">
+                    <mat-card-subtitle class="form__subtitle">
+                        We have sent you another confirmation email.
+                    </mat-card-subtitle>
+                </div>
             </div>
-            <a mat-raised-button color="primary" class="form__element" routerLink="/users/login">Log in</a>
         </div>
     </mat-card>
 </div>

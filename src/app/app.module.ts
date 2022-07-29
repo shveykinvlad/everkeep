@@ -16,6 +16,7 @@ import { NoteDetailsComponent } from './components/note-details/note-details.com
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
 import { ConfirmationComponent } from './components/confirmation/confirmation.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { ConfirmationComponent } from './components/confirmation/confirmation.co
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    MatSnackBarModule,
     MaterialModule
   ],
   providers: [

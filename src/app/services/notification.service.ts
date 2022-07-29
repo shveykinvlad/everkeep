@@ -8,9 +8,9 @@ const CLOSE_ACTION: string = 'X';
 })
 export class NotificationService {
 
-    constructor(public snackBar: MatSnackBar) { }
+    constructor(private snackBar: MatSnackBar) { }
 
     showError(message: string): void {
-        this.snackBar.open(message, CLOSE_ACTION);
+        this.snackBar.open(message, CLOSE_ACTION, { duration: 2000 });
     }
 }

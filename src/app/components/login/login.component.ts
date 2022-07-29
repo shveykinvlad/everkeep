@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
-import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
 import { SessionRequest } from '../../models/session-request';
+import { SessionService } from 'src/app/services/session.service';
 
 
 @Component({
@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
 
   form: UntypedFormGroup;
 
-  constructor(private userService: UserService, private router: Router) { }
+  constructor(private sessionService: SessionService, private router: Router) { }
 
   ngOnInit(): void {
     this.form = new UntypedFormGroup({
@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
       password: this.form.get('password').value,
     };
 
-    this.userService.createSession(requestPayload)
+    this.sessionService.create(requestPayload)
       .subscribe(() => this.router.navigateByUrl(''));
   }
 }

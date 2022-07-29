@@ -9,11 +9,21 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class ConfirmationComponent implements OnInit {
 
-  constructor(private userService: UserService, private route: ActivatedRoute) { }
+  isCompleted: boolean;
+
+  constructor(private userService: UserService, private route: ActivatedRoute) {
+    this.isCompleted = false;
+  }
 
   ngOnInit(): void {
     const token: string = this.route.snapshot.queryParamMap.get('token');
-    this.userService.applyConfirmation(token)
-      .subscribe();
+    this.userService.applyConfirmation(token).subscribe(
+      suc => {
+        this.isCompleted = true
+      },
+      err => {
+        this.isCompleted = false;
+      }
+    );
   }
 }

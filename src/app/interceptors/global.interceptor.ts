@@ -4,16 +4,23 @@ import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
 import { SessionResponse } from '../models/session-response';
-import { UserService } from '../services/user.service';
+import { NotificationService } from '../services/notification.service';
+import { SessionService } from '../services/session.service';
+
+const SESSION_ERROR_MESSAGE: string = 'Full authentication is required to access this resource';
+const VERIFICATION_TOKEN_ERROR_MESSAGE: string = 'Verification token is expired';
 
 @Injectable()
 export class GlobalInterceptor implements HttpInterceptor {
 
-  constructor(private userService: UserService, private router: Router) { }
+  constructor(
+    private sessionService: SessionService,
+    private notificationService: NotificationService,
+    private router: Router) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (this.userService.getAccessToken()) {
-      request = this.getAuthorizedRequest(request, this.userService.getAccessToken());
+    if (this.sessionService.getAccessToken()) {
+      request = this.getAuthorizedRequest(request, this.sessionService.getAccessToken());
     }
 
     return next.handle(request).pipe(
@@ -41,31 +48,25 @@ export class GlobalInterceptor implements HttpInterceptor {
   }
 
   private handleHttpError(request: HttpRequest<any>, error: HttpErrorResponse, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (this.isUnauthorizedError(error)) {
-      return this.handleUnauthorizedError(request, next);
+    if (this.isSessionError(error)) {
+      return this.handleSessionError(request, next);
+    } else {
+      this.notificationService.showError(error.error.message);
     }
     return throwError(error);
   }
 
-  private isUnauthorizedError(error: HttpErrorResponse): boolean {
-    return error.status === HttpStatusCode.Unauthorized;
+  private isSessionError(error: HttpErrorResponse): boolean {
+    return error.status === HttpStatusCode.Unauthorized
+      && SESSION_ERROR_MESSAGE === error.error.message;
   }
 
-  private isBadRequestError(error: HttpErrorResponse): boolean {
-    return error.status === HttpStatusCode.BadRequest;
-  }
-
-  private handleVerificationTokenExpiredError(): void {
-    this.userService.clearData();
-    this.router.navigateByUrl('/users/login');
-  }
-
-  private handleUnauthorizedError(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  private handleSessionError(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return this.getToken(request, next);
   }
 
   private getToken(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    return this.userService.refreshSession().pipe(
+    return this.sessionService.update().pipe(
       switchMap((sessionResponse: SessionResponse) => {
         return next.handle(this.getAuthorizedRequest(request, sessionResponse.jwt));
       }),
@@ -81,6 +82,13 @@ export class GlobalInterceptor implements HttpInterceptor {
   }
 
   private isVerificationTokenExpiredError(error: HttpErrorResponse): boolean {
-    return this.isHttpError(error) && this.isBadRequestError(error) && error.error.message === 'Verification token is expired';
+    return this.isHttpError(error)
+      && error.status === HttpStatusCode.BadRequest
+      && VERIFICATION_TOKEN_ERROR_MESSAGE === error.error.message;
+  }
+
+  private handleVerificationTokenExpiredError(): void {
+    this.sessionService.clearData();
+    this.router.navigateByUrl('/users/login');
   }
 }
