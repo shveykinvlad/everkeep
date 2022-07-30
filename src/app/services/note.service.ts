@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Note } from '../models/note';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { Note } from '../models/note';
 
 const NOTES_URL: string = `${environment.apiUrl}/notes`;
 const SEARCH_URL: string = `${NOTES_URL}/search`;
@@ -13,7 +13,9 @@ const VALUE_PARAM: string = 'value';
 })
 export class NoteService {
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient
+  ) { }
 
   getNotes(): Observable<Note[]> {
     return this.http.get<Note[]>(NOTES_URL);

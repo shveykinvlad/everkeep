@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Priority } from 'src/app/enums/priority.enum';
 import { Note } from 'src/app/models/note';
 import { NoteService } from 'src/app/services/note.service';
-import { Priority } from 'src/app/enums/priority.enum';
-import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-note-details',
@@ -15,17 +15,25 @@ export class NoteDetailsComponent implements OnInit {
 
   priorities = [];
   id: number;
-  form: UntypedFormGroup;
+  form = this.formBuilder.group({
+    title: ['', [Validators.required]],
+    text: ['', [Validators.required]],
+    priority: [Priority.NONE],
+  });
 
-  constructor(private route: ActivatedRoute, private router: Router, private noteService: NoteService, private location: Location) {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private noteService: NoteService,
+    private location: Location,
+    private formBuilder: FormBuilder
+  ) {
     this.id = this.getPathId();
     this.priorities = Object.keys(Priority)
       .filter(key => isNaN(+key));
   }
 
   ngOnInit(): void {
-    this.initForm();
-
     if (!Number.isNaN(this.id)) {
       this.noteService.getNote(this.id)
         .subscribe(note => this.form.patchValue(note));
@@ -60,19 +68,11 @@ export class NoteDetailsComponent implements OnInit {
       });
   }
 
-  private initForm(): void {
-    this.form = new UntypedFormGroup({
-      title: new UntypedFormControl(),
-      text: new UntypedFormControl(),
-      priority: new UntypedFormControl()
-    });
-  }
-
   private createNote(): Note {
     const id = this.id;
-    const title = this.form.get('title').value;
-    const text = this.form.get('text').value;
-    const priority = this.form.get('priority').value == null ? Priority.NONE : this.form.get('priority').value;
+    const title = this.form.value.title;
+    const text = this.form.value.text;
+    const priority = this.form.value.priority;
 
     const note: Note = { id, title, text, priority };
 

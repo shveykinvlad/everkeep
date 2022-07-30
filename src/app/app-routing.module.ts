@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { RegistrationComponent } from './components/registration/registration.component';
+import { AuthGuard } from 'src/app/guards/auth.guard';
+import { ConfirmationComponent } from './components/confirmation/confirmation.component';
 import { LoginComponent } from './components/login/login.component';
+import { NoteDetailsComponent } from './components/note-details/note-details.component';
+import { NotesComponent } from './components/notes/notes.component';
+import { RegistrationComponent } from './components/registration/registration.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { UpdatePasswordComponent } from './components/update-password/update-password.component';
-import { AuthGuard as AuthGuard } from 'src/app/guards/auth.guard';
-import { NotesComponent } from './components/notes/notes.component';
-import { NoteDetailsComponent } from './components/note-details/note-details.component';
-import { ConfirmationComponent } from './components/confirmation/confirmation.component';
 
 const routes: Routes = [
   { path: 'users/login', component: LoginComponent },

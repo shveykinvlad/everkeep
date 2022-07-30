@@ -11,7 +11,10 @@ export class ConfirmationComponent implements OnInit {
 
   isCompleted: boolean;
 
-  constructor(private userService: UserService, private route: ActivatedRoute) {
+  constructor(
+    private userService: UserService,
+    private route: ActivatedRoute
+  ) {
     this.isCompleted = false;
   }
 

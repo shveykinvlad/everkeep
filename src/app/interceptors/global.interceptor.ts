@@ -16,7 +16,8 @@ export class GlobalInterceptor implements HttpInterceptor {
   constructor(
     private sessionService: SessionService,
     private notificationService: NotificationService,
-    private router: Router) { }
+    private router: Router
+  ) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (this.sessionService.getAccessToken()) {

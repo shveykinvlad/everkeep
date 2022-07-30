@@ -1,12 +1,12 @@
-import { Injectable, Output, EventEmitter } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { EventEmitter, Injectable, Output } from '@angular/core';
 import { Observable } from 'rxjs';
-import { SessionRequest } from '../models/session-request';
-import { SessionResponse } from '../models/session-response';
 import { tap } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 import { Header } from '../constants/header';
 import { LocalStorageItem } from '../constants/local-storage-items';
-import { environment } from 'src/environments/environment';
+import { SessionRequest } from '../models/session-request';
+import { SessionResponse } from '../models/session-response';
 
 const SESSIONS_URL: string = `${environment.apiUrl}/sessions`;
 
@@ -18,7 +18,9 @@ export class SessionService {
   @Output() authenticated: EventEmitter<boolean> = new EventEmitter();
   @Output() userEmail: EventEmitter<string> = new EventEmitter();
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient
+  ) { }
 
   create(payload: SessionRequest): Observable<SessionResponse> {
     return this.http.post<SessionResponse>(SESSIONS_URL, payload).pipe(

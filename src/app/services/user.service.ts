@@ -1,16 +1,14 @@
-import { Injectable, Output, EventEmitter } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { RegistrationRequest } from '../models/registration-request';
+import { EventEmitter, Injectable, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Header } from '../constants/header';
+import { RegistrationRequest } from '../models/registration-request';
 
 const USERS_URL: string = `${environment.apiUrl}/users`;
 const CONFIRMATION_URL: string = `${USERS_URL}/confirmation`;
 const PASSWORD_URL: string = `${USERS_URL}/password`;
 const EMAIL_PARAM: string = 'email';
-
-const SESSIONS_URL: string = `sessions`;
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +18,9 @@ export class UserService {
   @Output() authenticated: EventEmitter<boolean> = new EventEmitter();
   @Output() userEmail: EventEmitter<string> = new EventEmitter();
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient
+  ) { }
 
   register(requestPayload: RegistrationRequest): Observable<void> {
     return this.http.post<void>(USERS_URL, requestPayload);

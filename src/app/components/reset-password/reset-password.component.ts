@@ -1,29 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { UserService } from 'src/app/services/user.service';
-import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-reset-password',
   templateUrl: './reset-password.component.html',
   styleUrls: ['./reset-password.component.css']
 })
-export class ResetPasswordComponent implements OnInit {
+export class ResetPasswordComponent {
 
   isCompleted: boolean;
-  form: UntypedFormGroup;
 
-  constructor(private userService: UserService) {
+  form = this.formBuilder.group({
+    email: ['', [Validators.required, Validators.email]]
+  });
+
+  constructor(
+    private userService: UserService,
+    private formBuilder: FormBuilder
+  ) {
     this.isCompleted = false;
   }
 
-  ngOnInit(): void {
-    this.form = new UntypedFormGroup({
-      email: new UntypedFormControl()
-    });
-  }
-
   resetPassword(): void {
-    const email: string = this.form.get('email').value;
+    const email: string = this.form.value.email;
     this.userService.resetPassword(email)
       .subscribe(() => {
         this.isCompleted = true;

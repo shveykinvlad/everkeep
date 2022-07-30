@@ -1,36 +1,37 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
-import { UserService } from '../../services/user.service';
 import { RegistrationRequest } from '../../models/registration-request';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.css']
 })
-export class RegistrationComponent implements OnInit {
+export class RegistrationComponent {
 
   isCompleted: boolean;
-  form: UntypedFormGroup;
 
-  constructor(private userService: UserService, private router: Router) {
+  form = this.formBuilder.group({
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(16)]],
+    matchingPassword: ['', [Validators.required]]
+  });
+
+  constructor(
+    private userService: UserService,
+    private router: Router,
+    private formBuilder: FormBuilder
+  ) {
     this.isCompleted = false;
-  }
-
-  ngOnInit(): void {
-    this.form = new UntypedFormGroup({
-      email: new UntypedFormControl(),
-      password: new UntypedFormControl(),
-      matchingPassword: new UntypedFormControl(),
-    });
   }
 
   register(): void {
     const requestPayload: RegistrationRequest = {
-      email: this.form.get('email').value,
-      password: this.form.get('password').value,
-      matchingPassword: this.form.get('matchingPassword').value
+      email: this.form.value.email,
+      password: this.form.value.password,
+      matchingPassword: this.form.value.matchingPassword
     };
     this.userService.register(requestPayload)
       .subscribe(() => {
@@ -39,7 +40,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   resendConfirmation(): void {
-    const email: string = this.form.get('email').value;
+    const email: string = this.form.value.email;
     this.userService.resendConfirmation(email)
       .subscribe();
   }

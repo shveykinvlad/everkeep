@@ -1,38 +1,39 @@
-import { Component, OnInit } from '@angular/core';
-import { UserService } from 'src/app/services/user.service';
+import { Component } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 import { RegistrationRequest } from 'src/app/models/registration-request';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-update-password',
   templateUrl: './update-password.component.html',
   styleUrls: ['./update-password.component.css']
 })
-export class UpdatePasswordComponent implements OnInit {
+export class UpdatePasswordComponent {
 
   isCompleted: boolean;
-  form: UntypedFormGroup;
   email: string;
   token: string;
 
-  constructor(private userService: UserService, private route: ActivatedRoute) {
-    this.isCompleted = false;
-  }
+  form = this.formBuilder.group({
+    password: ['', [Validators.required]],
+    matchingPassword: ['', [Validators.required]]
+  });
 
-  ngOnInit(): void {
-    this.form = new UntypedFormGroup({
-      password: new UntypedFormControl(),
-      matchingPassword: new UntypedFormControl(),
-    });
+  constructor(
+    private userService: UserService,
+    private route: ActivatedRoute,
+    private formBuilder: FormBuilder
+  ) {
+    this.isCompleted = false;
   }
 
   updatePassword(): void {
     const token: string = this.route.snapshot.queryParamMap.get('token');
     const requestPayload: RegistrationRequest = {
       email: this.route.snapshot.queryParamMap.get('email'),
-      password: this.form.get('password').value,
-      matchingPassword: this.form.get('matchingPassword').value
+      password: this.form.value.password,
+      matchingPassword: this.form.value.matchingPassword
     };
     this.userService.updatePassword(requestPayload, token)
       .subscribe(() => {

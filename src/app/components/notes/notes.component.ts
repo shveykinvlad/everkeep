@@ -1,9 +1,9 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, ViewChildren, ChangeDetectorRef } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { fromEvent } from 'rxjs';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { Note } from 'src/app/models/note';
 import { NoteService } from 'src/app/services/note.service';
-import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
-import { fromEvent } from 'rxjs';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-notes',
@@ -17,7 +17,10 @@ export class NotesComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['priority', 'title', 'delete'];
   notes: Note[];
 
-  constructor(private noteService: NoteService, private router: Router) { }
+  constructor(
+    private noteService: NoteService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.getNotes();

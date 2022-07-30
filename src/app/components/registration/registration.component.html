@@ -4,17 +4,18 @@
             <form class="form" [formGroup]="form" (ngSubmit)="register()">
                 <mat-form-field class="form__element">
                     <mat-label>Email</mat-label>
-                    <input matInput type="text" formControlName="email" required>
+                    <input matInput type="text" formControlName="email">
                 </mat-form-field>
                 <mat-form-field class="form__element">
                     <mat-label>Password</mat-label>
-                    <input matInput type="password" formControlName="password" required>
+                    <input matInput type="password" formControlName="password">
                 </mat-form-field>
                 <mat-form-field class="form__element">
                     <mat-label>Confirm password</mat-label>
-                    <input matInput type="password" formControlName="matchingPassword" required>
+                    <input matInput type="password" formControlName="matchingPassword">
                 </mat-form-field>
-                <button mat-raised-button color="primary" class="form__element" type="submit">Register</button>
+                <button mat-raised-button color="primary" class="form__element" type="submit"
+                    [disabled]="!form.valid">Register</button>
             </form>
         </div>
         <div *ngIf="isCompleted">

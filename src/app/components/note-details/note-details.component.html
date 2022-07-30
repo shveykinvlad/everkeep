@@ -17,7 +17,8 @@
                     </mat-option>
                 </mat-select>
             </mat-form-field>
-            <button mat-raised-button color="primary" class="form__element" type="submit">Save</button>
+            <button mat-raised-button color="primary" class="form__element" type="submit"
+                [disabled]="!form.valid">Save</button>
         </form>
     </mat-card>
 </div>
