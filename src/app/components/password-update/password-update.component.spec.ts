@@ -1,18 +1,13 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 
+import { PasswordUpdateComponent } from './password-update.component';
 
-import { LoginComponent } from './login.component';
-
-describe('LoginComponent', () => {
-  let component: LoginComponent;
-  let fixture: ComponentFixture<LoginComponent>;
+describe('PasswordUpdateComponent', () => {
+  let component: PasswordUpdateComponent;
+  let fixture: ComponentFixture<PasswordUpdateComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
@@ -20,18 +15,15 @@ describe('LoginComponent', () => {
         HttpClientTestingModule,
         RouterTestingModule,
         FormsModule,
-        ReactiveFormsModule,
-        MatCardModule,
-        MatFormFieldModule,
-        MatInputModule,
-        BrowserAnimationsModule],
-      declarations: [LoginComponent]
+        ReactiveFormsModule
+      ],
+      declarations: [PasswordUpdateComponent]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LoginComponent);
+    fixture = TestBed.createComponent(PasswordUpdateComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -5,11 +5,11 @@ import { RegistrationRequest } from 'src/app/models/registration-request';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
-  selector: 'app-update-password',
-  templateUrl: './update-password.component.html',
-  styleUrls: ['./update-password.component.css']
+  selector: 'app-password-update',
+  templateUrl: './password-update.component.html',
+  styleUrls: ['./password-update.component.css']
 })
-export class UpdatePasswordComponent {
+export class PasswordUpdateComponent {
 
   isCompleted: boolean;
   email: string;

@@ -13,18 +13,19 @@ import { LoginComponent } from './components/login/login.component';
 import { NoteDetailsComponent } from './components/note-details/note-details.component';
 import { NotesComponent } from './components/notes/notes.component';
 import { RegistrationComponent } from './components/registration/registration.component';
-import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
-import { UpdatePasswordComponent } from './components/update-password/update-password.component';
+import { PasswordResetComponent } from './components/password-reset/password-reset.component';
+import { PasswordUpdateComponent } from './components/password-update/password-update.component';
 import { GlobalInterceptor } from './interceptors/global.interceptor';
 import { MaterialModule } from './material/material.module';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegistrationComponent,
-    ResetPasswordComponent,
-    UpdatePasswordComponent,
+    PasswordResetComponent,
+    PasswordUpdateComponent,
     HeaderComponent,
     NotesComponent,
     NoteDetailsComponent,
@@ -38,7 +39,8 @@ import { MaterialModule } from './material/material.module';
     HttpClientModule,
     BrowserAnimationsModule,
     MatSnackBarModule,
-    MaterialModule
+    MaterialModule,
+    MatInputModule
   ],
   providers: [
     {
