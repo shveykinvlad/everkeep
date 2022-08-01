@@ -1,10 +1,9 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
+import { MaterialModule } from 'src/app/material/material.module';
 
 import { NoteDetailsComponent } from './note-details.component';
 
@@ -19,8 +18,7 @@ describe('NoteDetailsComponent', () => {
         RouterTestingModule,
         FormsModule,
         ReactiveFormsModule,
-        MatSelectModule,
-        MatInputModule,
+        MaterialModule,
         BrowserAnimationsModule
       ],
       declarations: [NoteDetailsComponent]

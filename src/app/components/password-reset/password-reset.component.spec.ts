@@ -1,6 +1,8 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from 'src/app/material/material.module';
 
 import { PasswordResetComponent } from './password-reset.component';
 
@@ -13,7 +15,9 @@ describe('PasswordResetComponent', () => {
       imports: [
         HttpClientTestingModule,
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        MaterialModule,
+        BrowserAnimationsModule
       ],
       declarations: [PasswordResetComponent]
     })
