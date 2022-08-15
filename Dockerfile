@@ -1,6 +1,6 @@
-# Stage 1: Compile and Build angular codebase
+# Stage 1: Compile and Build
 
-# Use official node image as the base image
+# Use the base image
 FROM node as build
 
 # Set the working directory
@@ -24,5 +24,3 @@ FROM nginx
 # Copy the build output to replace the default nginx contents.
 COPY --from=build /usr/local/app/dist/everkeep-ui /usr/sdre/nginx/html
 
-# Expose port 80
-EXPOSE 80
