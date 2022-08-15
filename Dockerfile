@@ -22,5 +22,5 @@ RUN npm run build
 FROM nginx
 
 # Copy the build output to replace the default nginx contents.
-COPY --from=build /usr/local/app/dist/everkeep-ui /usr/sdre/nginx/html
+COPY --from=build /usr/local/app/dist/everkeep /usr/sdre/nginx/html
 
