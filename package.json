@@ -1,10 +1,10 @@
 {
-  "name": "everkeep-ui",
+  "name": "everkeep",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
     "heroku-postbuild": "ng build --configuration production && npm install -g http-server-spa",
-    "start": "http-server-spa dist/everkeep-ui index.html $PORT",
+    "start": "http-server-spa dist/everkeep index.html $PORT",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
