@@ -28,9 +28,8 @@ Backend: https://everkeep-api.herokuapp.com
 ## How to run locally
 #### Prerequisites
 * Locally running [everkeep-api](https://github.com/shveykinvlad/everkeep-api#how-to-run-locally) application;
-* NodeJS;
-* Angular CLI;
 #### Steps
 1. open project folder: `cd <path-to-project>`;
-2. install the needed node modules: `npm i`;
-3. start aplication: `ng serve --open`;
+2. set up environment variables in `.env` file;
+3. run app in docker container: `docker-compose up`;
+4. stop app docker container: `docker-compose down`;
