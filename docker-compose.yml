@@ -1,0 +1,7 @@
+version: "3.8"
+services:
+  ui:
+    build: .
+    env_file: .env
+    ports:
+      - $APP_HOST_PORT:$APP_DOCKER_PORT
