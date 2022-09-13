@@ -1,26 +1,14 @@
-# Stage 1: Compile and Build
-
-# Use the base image
-FROM node as build
-
+# Stage 1: Build an Angular Docker Image
+# Set base image
+FROM node:latest as node
 # Set the working directory
-WORKDIR /usr/local/app
-
-# Add the source code to app
-COPY ./ /usr/local/app/
-
+WORKDIR /app
+# Add the source code
+COPY . .
 # Install all the dependencies
 RUN npm install
+RUN npm run build --prod
 
-# Generate the build of the application
-RUN npm run build
-
-
-# Stage 2: Serve app with nginx server
-
-# Use official nginx image as the base image
-FROM nginx
-
-# Copy the build output to replace the default nginx contents.
-COPY --from=build /usr/local/app/dist/everkeep /usr/sdre/nginx/html
-
+# Stage 2, use the compiled app, ready for production with Nginx
+FROM nginx:alpine
+COPY --from=node /app/dist/everkeep /usr/share/nginx/html
