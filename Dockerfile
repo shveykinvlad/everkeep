@@ -1,14 +1,12 @@
 # Stage 1: Build an Angular Docker Image
-# Set base image
-FROM node:latest as node
-# Set the working directory
+FROM node:latest AS builder
 WORKDIR /app
-# Add the source code
-COPY . .
-# Install all the dependencies
+COPY package.json .
 RUN npm install
-RUN npm run build --prod
+COPY . .
+RUN npm run build
 
 # Stage 2, use the compiled app, ready for production with Nginx
-FROM nginx:alpine
-COPY --from=node /app/dist/everkeep /usr/share/nginx/html
+FROM nginx:latest
+COPY --from=builder /app/dist/everkeep/* /usr/share/nginx/html/
+COPY nginx.conf /etc/nginx/conf.d/default.conf
