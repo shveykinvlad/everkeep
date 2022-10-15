@@ -69,7 +69,7 @@ export class GlobalInterceptor implements HttpInterceptor {
   private getToken(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return this.sessionService.update().pipe(
       switchMap((sessionResponse: SessionResponse) => {
-        return next.handle(this.getAuthorizedRequest(request, sessionResponse.jwt));
+        return next.handle(this.getAuthorizedRequest(request, sessionResponse.authToken));
       }),
       catchError(error => this.handleRefreshSessionError(request, error, next))
     );

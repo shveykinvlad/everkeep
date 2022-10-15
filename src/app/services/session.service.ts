@@ -78,7 +78,7 @@ export class SessionService {
   }
 
   private saveSession(response: SessionResponse): void {
-    localStorage.setItem(LocalStorageItem.ACCESS_TOKEN, response.jwt);
+    localStorage.setItem(LocalStorageItem.ACCESS_TOKEN, response.authToken);
     localStorage.setItem(LocalStorageItem.REFRESH_TOKEN, response.refreshToken);
     localStorage.setItem(LocalStorageItem.USER_EMAIL, response.email);
   }
