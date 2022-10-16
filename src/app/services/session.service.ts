@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { EventEmitter, Injectable, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
@@ -8,7 +8,7 @@ import { SessionRequest } from '../models/session-request';
 import { SessionResponse } from '../models/session-response';
 
 const SESSIONS_URL: string = `${environment.apiUrl}/sessions`;
-const TOKEN_PARAM: string = 'token';
+const REFRESH_TOKEN_HEADER: string = 'Refresh-Token';
 
 @Injectable({
   providedIn: 'root'
@@ -34,8 +34,8 @@ export class SessionService {
 
   update(): Observable<SessionResponse> {
     return this.http.put<SessionResponse>(SESSIONS_URL, null, {
-      params: new HttpParams()
-        .set(TOKEN_PARAM, this.getRefreshToken()),
+      headers: new HttpHeaders()
+        .set(REFRESH_TOKEN_HEADER, this.getRefreshToken()),
     }).pipe(
       tap(sessionResponse => {
         this.saveSession(sessionResponse);
@@ -47,8 +47,8 @@ export class SessionService {
 
   delete(): void {
     this.http.delete<void>(SESSIONS_URL, {
-      params: new HttpParams()
-        .set(TOKEN_PARAM, this.getRefreshToken()),
+      headers: new HttpHeaders()
+        .set(REFRESH_TOKEN_HEADER, this.getRefreshToken()),
     }).subscribe();
 
     this.clearData();
