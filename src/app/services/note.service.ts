@@ -6,7 +6,7 @@ import { Note } from '../models/note';
 
 const NOTES_URL: string = `${environment.apiUrl}/notes`;
 const SEARCH_URL: string = `${NOTES_URL}/search`;
-const VALUE_PARAM: string = 'value';
+const TITLE_PARAM: string = 'title';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +27,7 @@ export class NoteService {
     }
     return this.http.get<Note[]>(SEARCH_URL, {
       params: new HttpParams()
-        .set(VALUE_PARAM, value)
+        .set(TITLE_PARAM, value)
     });
   }
 

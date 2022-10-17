@@ -48,7 +48,7 @@ export class UserService {
   }
 
   updatePassword(requestPayload: RegistrationRequest, token: string): Observable<void> {
-    return this.http.post<void>(PASSWORD_URL, requestPayload, {
+    return this.http.put<void>(PASSWORD_URL, requestPayload, {
       params: new HttpParams()
         .set(TOKEN_PARAM, token),
     });
